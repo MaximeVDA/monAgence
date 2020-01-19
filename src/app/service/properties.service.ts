@@ -33,4 +33,8 @@ export class PropertiesService {
   }
 
   getProperties() {}
+
+  createProperty(property) {
+    this.properties.push(property);
+  }
 }
