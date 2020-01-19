@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-<<<<<<< HEAD
 import {NgForm} from '@angular/forms';
-=======
->>>>>>> f2adb2d407f88c8b4f34b011e5c5a34de58f53e5
 
 @Component({
   selector: 'app-admin-properties',
