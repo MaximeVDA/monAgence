@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, NgForm, Validators} from "@angular/forms";
-import {PropertiesService} from "../../service/properties.service";
+import {PropertiesService} from "../../services/properties.service";
 import {Subscription} from "rxjs";
 import * as $ from 'jquery';
 import {Property} from "../../interfaces/property";
@@ -33,6 +33,7 @@ export class AdminPropertiesComponent implements OnInit {
         this.properties = data;
       }
     );
+    this.propertiesService.getProperties();
     this.propertiesService.emitProperties();
   }
 
@@ -50,6 +51,7 @@ export class AdminPropertiesComponent implements OnInit {
 
   onSubmitPropertiesForm() {
     const newProperty: Property = this.propertiesForm.value;
+    newProperty.sold = this.propertiesForm.get('sold').value ? this.propertiesForm.get('sold').value : false;
     if (this.editMode) {
       this.propertiesService.updateProperty(newProperty, this.indexToUpdate);
     } else {

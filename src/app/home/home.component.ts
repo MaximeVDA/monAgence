@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {PropertiesService} from '../service/properties.service';
+import {PropertiesService} from '../services/properties.service';
 import {Subscription} from 'rxjs';
 
 @Component({
