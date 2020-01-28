@@ -21,6 +21,10 @@ export class AdminPropertiesComponent implements OnInit {
   indexToUpdate;
   editMode = false;
 
+  photoUploading = false;
+  photoUploaded = false;
+  photoUrl: string;
+
   constructor(
     private formBuilder: FormBuilder,
     private propertiesService: PropertiesService
@@ -52,6 +56,7 @@ export class AdminPropertiesComponent implements OnInit {
   onSubmitPropertiesForm() {
     const newProperty: Property = this.propertiesForm.value;
     newProperty.sold = this.propertiesForm.get('sold').value ? this.propertiesForm.get('sold').value : false;
+    newProperty.photo = this.photoUrl ? this.photoUrl : '';
     if (this.editMode) {
       this.propertiesService.updateProperty(newProperty, this.indexToUpdate);
     } else {
@@ -94,4 +99,20 @@ export class AdminPropertiesComponent implements OnInit {
     );
     this.indexToUpdate = index;
   }
+
+  onUploadFile(event) {
+    this.photoUploading = true;
+    //console.log(event);
+    this.propertiesService.uploadFile(event.target.files[0]).then(
+      (url: string) => {
+        this.photoUrl = url;
+        this.photoUploading = false;
+        this.photoUploaded = true;
+        setTimeout(() => {
+          this.photoUploaded = false;
+          }, 5000);
+      }
+    );
+  }
+
 }

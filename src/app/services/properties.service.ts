@@ -51,4 +51,30 @@ export class PropertiesService {
       }
     );
   }
+
+  uploadFile(file: File) {
+    return new Promise(
+      (resolve, reject) => {
+        const uniqueId = Date.now().toString();
+        const fileName = uniqueId + file.name;
+        const upload = firebase.storage().ref().child('images/properties/' + uniqueId + file.name).put(file);
+        upload.on(firebase.storage.TaskEvent.STATE_CHANGED,
+          () => {
+            console.log('Chargement...');
+          },
+          (error) => {
+            console.error(error);
+            reject(error);
+          },
+          () => {
+            upload.snapshot.ref.getDownloadURL().then(
+              (downloadUrl) => {
+                resolve(downloadUrl);
+              }
+            );
+          }
+        );
+      }
+    );
+  }
 }
